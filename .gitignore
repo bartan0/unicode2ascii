@@ -1,1 +1,4 @@
-# Currently no files shall be ignored
+__pycache__/
+*.pyc
+/dist/
+/unicode2ascii.egg-info/
