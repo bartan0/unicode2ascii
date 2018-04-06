@@ -3,9 +3,17 @@ import unicodedata as ucd
 
 from itertools import count
 
-_asciize_pattern = re.compile('(LATIN (?:CAPITAL|SMALL) LETTER .) WITH .*')
+latin_transliteration = {
+	'Æ': 'AE', 'Ð': 'D', 'Þ': 'TH',
+	'æ': 'ae', 'ð': 'd', 'þ': 'th', 'ß': 'ss', 'ı': 'i'
+}
 
-def asciize(s, rep = '_'):
+_pattern = re.compile('(LATIN (?:CAPITAL|SMALL) LETTER .) WITH .*')
+
+def asciize(s, rep = '_', charmap = None):
+	if charmap == None:
+		charmap = latin_transliteration.copy()
+
 	res = list(s)
 
 	for i_c, c in zip(count(0), res):
@@ -13,11 +21,15 @@ def asciize(s, rep = '_'):
 			continue
 
 		if ord(c) > 127:
-			match = re.fullmatch(_asciize_pattern, ucd.name(c, ''))
-			if match:
-				res[i_c] = ucd.lookup(match.groups()[0])
+			if c in charmap:
+				res[i_c] = charmap[c]
 				continue
+			else:
+				match = re.fullmatch(_pattern, ucd.name(c, ''))
+				if match:
+					charmap[c] = res[i_c] = ucd.lookup(match.groups()[0])
+					continue
 
-		res[i_c] = rep
+		charmap[c] = res[i_c] = rep
 
 	return ''.join(res)

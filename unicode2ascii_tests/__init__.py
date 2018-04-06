@@ -22,12 +22,12 @@ class TestAsciize(unittest.TestCase):
 
 	def test_pangram_dk(self):
 		self.assertEqual(asciize(
-			'Masseødelæggelsesvåben'.upper()),
-			'Masseodel_ggelsesvaben'.upper()
+			'Masseødelæggelsesvåben'.upper(), charmap = {'Æ': 'AE'}),
+			'Masseodelaeggelsesvaben'.upper()
 		)
 		self.assertEqual(asciize(
-			'Masseødelæggelsesvåben'),
-			'Masseodel_ggelsesvaben'
+			'Masseødelæggelsesvåben', charmap = {'æ': 'ae'}),
+			'Masseodelaeggelsesvaben'
 		)
 
 	def test_pangram_cz(self):
@@ -42,11 +42,11 @@ class TestAsciize(unittest.TestCase):
 
 	def test_pangram_dk2(self):
 		self.assertEqual(asciize(
-			'Ærøål'.upper()),
-			'_roal'.upper()
+			'Ærøål'.upper(), charmap = {'Æ': 'AE'}),
+			'AEroal'.upper()
 		)
 		self.assertEqual(asciize(
-			'Ærøål'),
+			'Ærøål', charmap = {}),
 			'_roal'
 		)
 
@@ -66,8 +66,8 @@ class TestAsciize(unittest.TestCase):
 			'Heizolruckstossabdampfung'.upper()
 		)
 		self.assertEqual(asciize(
-			'Heizölrückstoßabdämpfung'),
-			'Heizolrucksto_abdampfung'
+			'Heizölrückstoßabdämpfung', charmap = {'ß': 'ss'}),
+			'Heizolruckstossabdampfung'
 		)
 
 	def test_pangram_hu(self):
@@ -82,22 +82,30 @@ class TestAsciize(unittest.TestCase):
 
 	def test_pangram_is(self):
 		self.assertEqual(asciize(
-			'Sævör grét áðan því úlpan var ónýt.'.upper()),
-			'S_vor gret a_an _vi ulpan var onyt.'.upper()
+			'Sævör grét áðan því úlpan var ónýt.'.upper(), charmap = {
+				'Æ': 'AE',
+				'Ð': 'D',
+				'Þ': 'TH'
+			}),
+			'Saevor gret adan thvi ulpan var onyt.'.upper()
 		)
 		self.assertEqual(asciize(
-			'Sævör grét áðan því úlpan var ónýt.'),
-			'S_vor gret a_an _vi ulpan var onyt.'
+			'Sævör grét áðan því úlpan var ónýt.', charmap = {
+				'æ': 'ae',
+				'ð': 'd',
+				'þ': 'th'
+			}),
+			'Saevor gret adan thvi ulpan var onyt.'
 		)
 
 	def test_pangram_no(self):
 		self.assertEqual(asciize(
-			'Blåbærsyltetøy'.upper()),
-			'Blab_rsyltetoy'.upper()
+			'Blåbærsyltetøy'.upper(), charmap = {'Æ': 'AE'}),
+			'Blabaersyltetoy'.upper()
 		)
 		self.assertEqual(asciize(
 			'Blåbærsyltetøy'),
-			'Blab_rsyltetoy'
+			'Blabaersyltetoy'
 		)
 
 	def test_pangram_pl(self):
@@ -116,8 +124,8 @@ class TestAsciize(unittest.TestCase):
 			'Sisli_de buyuk cop yiginlari.'.upper()
 		)
 		self.assertEqual(asciize(
-			'Şişli’de büyük çöp yığınları.'),
-			'Sisli_de buyuk cop y_g_nlar_.'
+			'Şişli’de büyük çöp yığınları.', charmap = {'ı': 'i'}),
+			'Sisli_de buyuk cop yiginlari.'
 		)
 
 	def test_pangram_sk(self):

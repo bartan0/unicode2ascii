@@ -9,7 +9,8 @@ setup(
 	name = 'unicode2ascii',
 	version = '0.1.1',
 	license = 'MIT',
-	packages = ['unicode2ascii', 'unicode2ascii.tests'],
+	packages = ['unicode2ascii'],
+	# packages = ['unicode2ascii', 'unicode2ascii_tests'],
 	url = 'https://github.com/bartan0/unicode2ascii',
 
 	description = \
